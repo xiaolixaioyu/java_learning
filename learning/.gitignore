@@ -1,0 +1,14 @@
+# Maven 构建产物
+target/
+
+# IDEA 输出与配置
+out/
+.idea/
+*.iml
+
+# 日志
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db

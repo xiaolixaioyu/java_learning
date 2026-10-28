@@ -1,0 +1,26 @@
+# ===== 开发工具链（体积大，不入库） =====
+jdk-21/
+apache-maven-3.9.9/
+IntelliJ IDEA 2025.3/
+maven-repo/
+setup/
+
+# ===== 构建产物 =====
+**/target/
+**/out/
+**/*.class
+**/*.jar
+**/*.war
+**/run.log
+
+# ===== IDEA 工程文件 =====
+.idea/
+*.iml
+
+# ===== 日志 / 系统 =====
+*.log
+.DS_Store
+Thumbs.db
+
+# ===== WorkBuddy 内部数据（非学习资料） =====
+.workbuddy/
