@@ -1,4 +1,4 @@
-package com.study.OOP_3;
+package com.study.oop_3;
 public class Test3_1_2 {
     public static void main(String[] args) {
         // TODO: 给Person增加构造方法:
