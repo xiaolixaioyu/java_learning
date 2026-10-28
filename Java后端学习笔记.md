@@ -105,6 +105,19 @@
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）
 
+- **`this` 变量（指向当前实例）**
+  - 在方法内部，可以使用一个隐含的变量 `this`，它**始终指向当前实例**（即调用该方法的那个对象）。
+  - 通过 `this.field` 可以访问当前实例的字段（成员变量），常用于区分**同名的参数/局部变量**与成员变量。
+  ```java
+  public class Person {
+      private String name;
+      public void setName(String name) {
+          this.name = name;   // this.name 是成员变量，右边的 name 是参数
+      }
+  }
+  ```
+  - 易错/记忆：`this` 只能在**实例方法**和**构造器**里用；**静态方法（static）里没有 `this`**（静态方法不依赖实例）。
+
 -
 
 ### 1.4 异常 / 泛型 / IO / 反射 / 注解
