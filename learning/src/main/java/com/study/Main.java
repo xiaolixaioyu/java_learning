@@ -17,5 +17,7 @@ public class Main {
         stack.stream()
              .map(s -> "👉 " + s)
              .forEach(System.out::println);
+
+        System.out.println("1111");
     }
 }

@@ -36,17 +36,28 @@
 
 **目标**：能手写 Java 基础代码，应对笔试与面试八股。
 
-- [ ] 语法基础：变量/流程控制/数组/字符串
+> 📌 **学习进度（截至 2026-10-28）**：✅ 廖雪峰「快速入门」章节已完成（变量/数据类型/运算/字符与字符串/数组/流程控制/break·continue/输入输出）。✅ 下方「语法基础」已达标。下一步：看 **面向对象编程**（类/对象/封装/构造器）。
+
+- [x] 语法基础：变量/流程控制/数组/字符串（快速入门已完成 10/28）
 - [ ] 面向对象：类与对象、继承、多态、抽象类、接口
 - [ ] 核心类库：集合（List/Set/Map 源码与区别）、泛型、异常、常用 API
 - [ ] 进阶：反射、注解、Lambda、Stream API
 - [ ] 并发基础：线程创建、锁（synchronized / Lock）、线程池、volatile
 - [ ] JVM 基础（八股重点）：内存模型、GC 垃圾回收、类加载
-- [ ] **每日 LeetCode 1-2 题（强制用 Java 写）**，优先「热题 100 / 面试 150」
+- [ ] **算法：LeetCode Hot 100（强制 Java 写）**，每日 1 题、周末加 1 题（分类计划见第十三节）
+- [ ] **八股（小林coding）**：同步背 Java 基础 / 集合 / 并发 专题（链接见第十三节 B）
 
 > 里程碑：能脱离 AI 手写一个线程安全的单例 + 用 Stream 处理集合。
 
-> 📚 本阶段文档：廖雪峰 Java 教程 — <https://www.liaoxuefeng.com/wiki/1252599548343744（语法→集合→IO→并发→JVM> 一个站讲全）
+> 📚 本阶段文档（主线）：廖雪峰 **Java 书系** — <https://liaoxuefeng.com/books/java/>（同站还有 Spring `…/spring/`、Spring Boot `…/springboot/`；SQL `https://liaoxuefeng.com/books/sql/`、Git `https://liaoxuefeng.com/books/git/`，全站打通，作为阶段1/2/3 唯一主线）
+>
+> **廖雪峰 Java 书「学到哪为止」（阶段1 终点线）**：从「快速入门」一路看到 **「函数式编程（Lambda / Stream）」** + **「设计模式」** 结束即达标。逐周对应：
+> - 第1周：看 **快速入门** + **面向对象编程**（到接口/抽象类/继承/多态）
+> - 第2周：看 **核心类** + **异常处理** + **注解** + **泛型** + **集合** + **IO** + **日期与时间** + **反射**
+> - 第3周：看 **多线程** + **函数式编程** + **设计模式**
+>
+> ⚠️ 阶段1 不必在廖雪峰里深究：网络编程（Socket，黑马点评项目里会用到）、Maven 基础（工程已实操）、加密与安全（求职再补）。
+> ⚠️ **JVM 内存 / GC 廖雪峰讲得浅**，八股阶段用 **小林coding「JVM」** 或《深入理解Java虚拟机》前3章补。
 
 ---
 
@@ -61,11 +72,12 @@
 - [ ] **Maven**：依赖管理、生命周期、多模块
 - [ ] **Git**：分支、commit、rebase、PR 工作流
 - [ ] **Linux 基础**：常用命令、vim、部署基本操作
-- [ ] 继续每日算法（转向中等难度）
+- [ ] 继续 LeetCode Hot 100（树/回溯/二分/栈/堆，中等为主）
+- [ ] **八股（小林coding）**：背 MySQL / Redis 专题（索引/事务/缓存三大问题/分布式锁）
 
 > 里程碑：能手画 MySQL 索引 B+树结构 + 口述缓存三大问题对策。
 
-> 📚 本阶段文档：菜鸟教程 MySQL — <https://www.runoob.com/mysql/mysql-tutorial.html（深入可选极客时间《MySQL> 实战 45 讲》）
+> 📚 本阶段文档（主线）：廖雪峰 **SQL 教程**（MySQL，可在线跑）— <https://liaoxuefeng.com/books/sql/>（Redis 无廖雪峰书，随用随查官方文档 / 小林coding）
 
 ---
 
@@ -81,10 +93,12 @@
 - [ ] 日志：SLF4J + Logback
 - [ ] 单元测试：JUnit 5 + MockMvc
 - [ ] 八股同步复习：Spring 循环依赖、Bean 作用域、事务失效场景
+- [ ] 继续 LeetCode Hot 100（中等~困难：动态规划/图/贪心/设计题）
+- [ ] **八股（小林coding）**：重点背 Spring 专题（IOC/AOP/事务/三级缓存/自动装配/MyBatis）
 
 > 里程碑：用 Spring Boot + MyBatis 写完一个「用户注册/登录 + 增删改查」最小可用后端。
 
-> 📚 本阶段文档：Spring Boot 中文文档 — <https://springdoc.cn/spring-boot/（动手练配> Spring 官方 Guides <https://spring.io/guides）>
+> 📚 本阶段文档（主线）：廖雪峰 **Spring Boot 开发** — <https://liaoxuefeng.com/books/java/springboot/>（⚠️ 书里明说「跳过 Spring 直接学 Boot 不可能」，前置先看 **Spring** — <https://liaoxuefeng.com/books/java/spring/>）
 
 ---
 
@@ -92,14 +106,14 @@
 
 **目标**：做出能写进简历、可演示的 1-2 个项目（全推 GitHub）。
 
-**项目 A（必做，保底）**：博客 / 论坛 / 简易商城后端
+**项目 A（必做，保底）**：黑马点评（黑马程序员经典项目，已集成 Spring Boot + MySQL + Redis：短信登录、优惠券秒杀、分布式锁、缓存等，正好覆盖阶段3 实战）
 
-- [ ] 需求拆解 + 数据库设计（ER 图）
-- [ ] Spring Boot + MySQL + MyBatis-Plus 实现
-- [ ] Redis 做缓存（如热门文章 / 验证码）
-- [ ] JWT 鉴权 + 全局异常处理 + 统一返回格式
-- [ ] 写单元测试，Docker 部署上线（或本地可运行 demo）
-- [ ] 完善 README（架构图 + 接口列表 + 启动步骤）
+- [ ] 跟着课程搭框架：Spring Boot + MySQL + MyBatis-Plus + Redis
+- [ ] 用户模块：短信验证码登录（Redis 存验证码）、登录校验拦截器
+- [ ] 商户/优惠券模块：增删改查 + 缓存（商户详情缓存、缓存三大问题应对）
+- [ ] 秒杀模块：并发抢券、分布式锁（Redis）、库存超卖解决
+- [ ] 全局异常处理 + 统一返回 + 日志 + 单元测试
+- [ ] 完善 README（架构图 + 接口列表 + 启动步骤），推 GitHub
 
 **项目 B（加分，差异化）**：接入大模型的智能后端
 
@@ -110,7 +124,7 @@
 
 > 里程碑：面试官打开 GitHub 能本地跑起来、且你能逐行讲清关键代码。
 
-> 📚 本阶段文档：若依 Ruoyi — <https://www.ruoyi.vip/（读一个完整> Spring Boot 项目比看教程快；AI 模块查各模型官方文档）
+> 📚 本阶段文档：黑马点评（黑马程序员 · B 站/官网课程，跟着做即可；AI 差异化模块查各模型官方文档）
 
 ---
 
@@ -118,7 +132,7 @@
 
 - [ ] 简历：突出 Java/Spring、两个项目、技术栈；**AI 生成的代码必须自己讲过**
 - [ ] 投递渠道：实习僧、BOSS直聘、牛客校招、**导师/学长内推（成功率最高）**
-- [ ] 八股总复习：JavaGuide 过一遍、Spring/MySQL/Redis/JVM 重点
+- [ ] 八股总复习：小林coding 过一遍、Spring/MySQL/Redis/JVM 重点
 - [ ] 算法保持手感：每日 1 题，重点二叉树 / 动态规划 / 回溯
 - [ ] 模拟面试：手写核心逻辑 + 逐行解释项目代码，录屏复盘
 
@@ -137,12 +151,12 @@
 
 ## 九、资源索引（每阶段一个最全文档）
 
-- **总纲 / 八股（全程）**：JavaGuide — <https://github.com/Snailclimb/JavaGuide>
+- **八股（全程背诵）**：小林coding 面试专题 — <https://xiaolincoding.com/interview/>（图解 Java/MySQL/Redis/Spring/计网/OS；按阶段背的细分链接见第十三节 B；深入可选 JavaGuide）
 - **阶段 0 环境**：IDEA 新手指南 — <https://www.jetbrains.com/idea/learn/>
-- **阶段 1 Java SE**：廖雪峰 Java 教程 — <https://www.liaoxuefeng.com/wiki/1252599548343744>
-- **阶段 2 数据库**：菜鸟教程 MySQL — <https://www.runoob.com/mysql/mysql-tutorial.html（深入选极客时间《MySQL> 实战 45 讲》）
-- **阶段 3 Spring Boot**：Spring Boot 中文文档 — <https://springdoc.cn/spring-boot/>
-- **阶段 4 项目**：若依 Ruoyi — <https://www.ruoyi.vip/>
+- **阶段 1 Java SE（主线）**：廖雪峰 Java 书系 — <https://liaoxuefeng.com/books/java/>（学到「函数式编程 + 设计模式」结束；JVM 八股看小林coding）
+- **阶段 2 数据库（主线）**：廖雪峰 SQL 教程 — <https://liaoxuefeng.com/books/sql/>（MySQL；Redis 随查官方文档）
+- **阶段 3 Spring Boot（主线）**：廖雪峰 Spring Boot 开发 — <https://liaoxuefeng.com/books/java/springboot/>（前置 Spring — <https://liaoxuefeng.com/books/java/spring/>）
+- **阶段 4 项目**：黑马点评（黑马程序员 B 站/官网课程）
 - **阶段 5 求职**：牛客网 — <https://www.nowcoder.com/（算法用> LeetCode 中国 <https://leetcode.cn/）>
 
 > 工具类（Redis / Maven / Linux / Git）随用随查官方文档即可，不必提前系统学。
@@ -177,8 +191,8 @@
 
 ### 第 1 周（阶段 1 · Java SE 入门）10/31–11/6
 
-- [ ] 10/31（周六）：Java 基础语法（变量/类型/运算符）；LeetCode 1 题
-- [ ] 11/01（周日）：流程控制（if/switch/for/while）；LeetCode 1 题
+- [x] 10/31（周六）：Java 基础语法（变量/类型/运算符）— 随快速入门已于 10/28 完成；LeetCode 1 题
+- [x] 11/01（周日）：流程控制（if/switch/for/while）— 随快速入门已于 10/28 完成；LeetCode 1 题
 - [ ] 11/02（周一）：数组 + 字符串常用 API；LeetCode 1 题
 - [ ] 11/03（周二）：方法/重载/递归；LeetCode 1 题
 - [ ] 11/04（周三）：面向对象入门（类/对象/封装/构造器）；LeetCode 1 题
@@ -245,19 +259,19 @@
 - [ ] 12/17（周四）：完成「用户注册登录 + CRUD」最小可用后端；LeetCode 2 题
 - [ ] 12/18（周五）：阶段 3 里程碑自测（面试官视角跑通）
 
-### 第 8 周（阶段 4 · 项目 A 实战）12/19–12/25
+### 第 8 周（阶段 4 · 黑马点评实战）12/19–12/25
 
-- [ ] 12/19（周六）：项目 A 需求拆解 + ER 图 + 建表；LeetCode 1 题
-- [ ] 12/20（周日）：Spring Boot + MyBatis-Plus 搭框架 + 基础 CRUD；LeetCode 1 题
-- [ ] 12/21（周一）：用户模块（注册/登录/JWT）；LeetCode 1 题
-- [ ] 12/22（周二）：核心业务模块（文章/商品 CRUD）；LeetCode 1 题
-- [ ] 12/23（周三）：Redis 缓存（热门/验证码）；LeetCode 1 题
-- [ ] 12/24（周四）：全局异常处理 + 日志 + 接口文档；LeetCode 1 题
-- [ ] 12/25（周五）：单元测试 + 本地跑通 demo
+- [ ] 12/19（周六）：黑马点评 环境搭建 + 数据库导入（按课程来）；LeetCode 1 题
+- [ ] 12/20（周日）：用户模块——短信验证码登录（Redis 存码）+ 登录拦截器；LeetCode 1 题
+- [ ] 12/21（周一）：商户/店铺模块 CRUD + 商户详情缓存；LeetCode 1 题
+- [ ] 12/22（周二）：缓存三大问题（穿透/击穿/雪崩）应对；LeetCode 1 题
+- [ ] 12/23（周三）：优惠券秒杀 + 分布式锁（Redis）解决超卖；LeetCode 1 题
+- [ ] 12/24（周四）：全局异常处理 + 统一返回 + 日志 + 接口文档；LeetCode 1 题
+- [ ] 12/25（周五）：单元测试 + 本地跑通项目
 
-### 第 9 周（阶段 4 · 项目 A 收尾 + 项目 B 差异化）12/26–1/1
+### 第 9 周（阶段 4 · 黑马点评收尾 + 项目 B 差异化）12/26–1/1
 
-- [ ] 12/26（周六）：项目 A 完善 README + 架构图 + 部署；LeetCode 1 题
+- [ ] 12/26（周六）：黑马点评 完善 README + 架构图 + 部署；LeetCode 1 题
 - [ ] 12/27（周日）：推 GitHub + 写清启动步骤；LeetCode 1 题
 - [ ] 12/28（周一）：项目 B 选 AI 场景（智能问答/摘要）；LeetCode 1 题
 - [ ] 12/29（周二）：接入 DeepSeek/智谱 API（Java 调）；LeetCode 1 题
@@ -268,7 +282,7 @@
 ### 第 10 周（阶段 5 · 求职冲刺）1/2–1/8
 
 - [ ] 01/02（周六）：写简历（Java/Spring/两项目/技术栈）；LeetCode 1 题
-- [ ] 01/03（周日）：八股总复习 JavaGuide 一轮；LeetCode 1 题
+- [ ] 01/03（周日）：八股总复习 小林coding 一轮；LeetCode 1 题
 - [ ] 01/04（周一）：投递（实习僧/BOSS/牛客 + 内推）；LeetCode 1 题
 - [ ] 01/05（周二）：算法重点（二叉树/DP/回溯）；LeetCode 1 题
 - [ ] 01/06（周三）：模拟面试（手写 + 讲项目）；LeetCode 1 题
@@ -276,3 +290,56 @@
 - [ ] 01/08（周五）：继续投递 + 准备下周面试
 
 > 进度自查：完成一天就回头看路线图对应阶段的「里程碑」，能讲清楚再打勾进下一天。日期从 2026-10-28 起，遇放假/加班可顺延，但阶段里程碑不过关不进下一阶段。
+
+### 每日打卡上传 GitHub（已连好，私有仓 `java_learning`）
+
+仓库：https://github.com/xiaolixaioyu/java_learning （私有，已推送首个版本）
+
+每天在 IDEA 里勾完当天的 `[ ]` → 用 **Git Bash** 跑到 `F:/实习` 目录下执行一次即可：
+
+```bash
+git add -A && git commit -m "打卡 $(date +%Y-%m-%d)" && git push
+```
+
+- 凭据已在本机缓存（无需再输 token），直接 `git push` 即可。
+- 嫌敲命令麻烦：在 IDEA 里 VCS → Commit → 填备注 → Commit & Push 也行。
+- 安全：token 已从我这边的远程地址抹掉；你随时可在 GitHub → Settings → Developer settings → Personal access tokens 里 **Revoke** 作废。
+
+---
+
+## 十三、LeetCode Hot 100 + 八股（小林coding）详细安排
+
+### A. 算法：LeetCode Hot 100 分阶段刷
+
+**总目标**：阶段 1–3 完成 Hot 100 **第一轮**（每日 1 题、周末加 1 题，强制 Java 写）；阶段 5 二刷 + 模拟手撕。
+
+| 阶段 | 主攻 Hot 100 题型 | 难度 | 说明 |
+| --- | --- | --- | --- |
+| 阶段 1（1-3周） | 数组 / 字符串 / 哈希表 / 双指针 / 滑动窗口 / 链表 / 二叉树遍历 | 简单~中等 | 边练 Java 语法边打数据结构底子 |
+| 阶段 2（4-5周） | 二叉树（递归/层序）/ 回溯 / 二分查找 / 栈 / 堆 | 中等 | 配合算法加强周 |
+| 阶段 3（6-7周） | 动态规划 / 图 / 贪心 / 设计题 | 中等~困难 | 冲刺中等偏难 |
+| 阶段 5（10周+） | 二刷薄弱项 + 按公司分类 + 模拟手撕 | —— | 面试前冲刺 |
+
+- 题库入口：LeetCode 中国「热题 100」— <https://leetcode.cn/problem-list/53g78i55/>
+- 用法：每天 1 题 → **先自己写（禁用 AI 代写，否则白刷）** → 看题解对比思路 → 周末把同类题套路复盘成笔记。
+
+### B. 八股：小林coding 面试专题 按阶段背
+
+小林coding 全套面试索引：<https://xiaolincoding.com/interview/>（共 24 套；我们只需下面这几套，全是真实大厂题）
+
+| 阶段 | 背的专题（小林coding） | 链接 | 对应学的知识 |
+| --- | --- | --- | --- |
+| 阶段 1 | Java 基础（79 题） | <https://xiaolincoding.com/interview/java.html> | 语法 / 面向对象 / 常用 API |
+| 阶段 1 | Java 集合（69 题） | <https://xiaolincoding.com/interview/collections.html> | List / Set / Map |
+| 阶段 1 | Java 并发（73 题） | <https://xiaolincoding.com/interview/juc.html> | 线程 / 锁 / 线程池 |
+| 阶段 1 | Java 虚拟机（60 题） | <https://xiaolincoding.com/interview/jvm.html> | JVM / GC（廖雪峰讲得浅，这里补深） |
+| 阶段 2 | MySQL（115 题） | <https://xiaolincoding.com/interview/mysql.html> | 索引 / 事务 / 锁 / 优化 |
+| 阶段 2 | Redis（69 题） | <https://xiaolincoding.com/interview/redis.html> | 缓存 / 持久化 / 分布式锁 |
+| 阶段 3 | Spring（84 题） | <https://xiaolincoding.com/interview/spring.html> | IOC/AOP/事务/三级缓存/自动装配/MyBatis（你指定的那篇） |
+| 阶段 5 / 全程 | 计算机网络（96 题） | <https://xiaolincoding.com/interview/network.html> | TCP / HTTP / 状态码 |
+| 阶段 5 / 全程 | 操作系统（75 题） | <https://xiaolincoding.com/interview/os.html> | 进程线程 / 死锁 / 内存 |
+| 阶段 5 / 全程 | 数据结构与算法（53 题） | <https://xiaolincoding.com/interview/data.html> | 配合 Hot 100 |
+
+- 用法：学完对应阶段的知识后，打开该专题**每天背 5–10 题，能口述即可**；阶段 5 集中二刷。
+- 说明：小林coding 的 Spring 页涵盖 SpringMVC、SpringBoot 自动装配、MyBatis、事务失效、三级缓存等，正好对接阶段 3，是阶段 3 八股核心。
+- 节奏建议：每天 = 1 道 Hot 100（手撕）+ 5–10 道八股口述 + 1 小时廖雪峰主线学习。
