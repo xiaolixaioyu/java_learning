@@ -248,7 +248,8 @@
 
 ### 1.2 数组 / 字符串 / 集合（List/Set/Map）
 
-- **字符串 `String` 是不可变对象（immutable）**
+#### 1.2.1 字符串 `String`
+- **`String` 是不可变对象（immutable）**
   - `String` 一旦创建，**内容就不能再被修改**；字符串里的字符数据被设计为不可变。
   - **字符串操作不改变原字符串，而是返回一个新字符串**。例如 `s.toUpperCase()`、`s.replace(...)`、`s.substring(...)` 都不会改动 `s` 本身，而是生成新的 `String` 返回，原串依然不变。
   - 易错/面试点：因为不可变，**不要用 `String` 在循环里做大量拼接**（每次拼接都产生新对象，O(n²) 且产生大量垃圾），应使用 `StringBuilder` / `StringBuffer`。常量池（字符串字面量复用）也是不可变带来的优化。
@@ -275,6 +276,73 @@
   String back = new String(data, StandardCharsets.UTF_8);
   ```
   - 面试点：`new String(bytes)` 不指定编码会用**默认编码**（JVM 启动的 file.encoding，可能随系统变），生产代码务必显式传 `StandardCharsets.UTF_8`。读写文件、网络传输、URL 参数同理都要定编码。
+
+#### 1.2.2 数组（待补：快速入门已学基础，后续补多维数组 / `Arrays` 工具类 / 数组与集合互转）
+- （待学）
+
+#### 1.2.3 集合 Collection / Map（当前在学）
+- **集合框架两大根接口**
+  - `Collection`：存放**单个元素**，三大子接口——`List`（有序、可重复）、`Set`（无序、不可重复）、`Queue`（队列 / FIFO）。
+  - `Map`：存放**键值对 key-value**，代表实现 `HashMap`、`TreeMap`、`LinkedHashMap`。
+- **集合总览（核心概念）**
+  - 集合的目的：为了**便于处理一组类似的数据**。
+  - 三大集合类型（按用途区分）：
+    - **`List`**：一种**有序表**的集合（元素有先后次序，可重复，按索引访问）。
+    - **`Set`**：一种**保证没有重复元素**的集合（元素唯一，判重用 `equals`+`hashCode`）。
+    - **`Map`**：一种通过**键值 key-value 查找的映射表**集合（按 key 快速定位 value）。
+  - **定义位置与特性**：Java 的集合类定义在 **`java.util` 包**中，**支持泛型**（如 `List<String>`、`Map<Integer,String>`），主要提供 `List`、`Set`、`Map` 这 3 种集合类。
+  - **统一遍历**：Java 集合使用**统一的 `Iterator` 接口**遍历（for-each 底层也是 `Iterator`）。
+  - **避坑**：**尽量不要使用遗留接口 / 遗留集合类**（如 `Vector`、`Hashtable`、`Enumeration`、`Dictionary`、原始类型 `List` 不带泛型），改用 `ArrayList`/`HashMap` + 泛型 + `Iterator`；遗留类线程安全但性能差、设计陈旧。
+- **为什么用集合而不是数组**
+  - 数组长度固定、类型单一；集合可**动态扩容**、泛型保证**类型安全**、内置丰富 API（增删改查、排序、遍历），是 Java 后端最高频 API。
+- **`List` 接口（有序、可重复、按索引访问）**
+  - **定义**：`List` 是**按索引顺序访问、长度可变的有序表**；元素有先后次序、可重复，按下标（0 基）访问。
+  - **实现类选择**：**优先使用 `ArrayList` 而不是 `LinkedList`**。`ArrayList` 底层是**动态数组**（随机访问 O(1)、尾部增删快），绝大多数场景够用；`LinkedList` 是双向链表（头尾增删 O(1) 但随机访问慢、内存开销大），日常几乎不需要。
+  - **遍历**：可以直接用 **for-each** 遍历 `List`（底层走 `Iterator`）：
+    ```java
+    List<String> list = new ArrayList<>(List.of("A", "B", "C"));
+    for (String s : list) {         // 直接 for-each
+        System.out.println(s);
+    }
+    ```
+  - **和数组互转**：
+    - `List → 数组`：`list.toArray(new String[0])`（传空数组是惯用法，JVM 自动按大小创建）。
+    - `数组 → List`：`Arrays.asList("A","B","C")` 或 `List.of("A","B","C")`（`List.of` 返回不可变列表）。
+    ```java
+    String[] arr = list.toArray(new String[0]);     // List → 数组
+    List<String> l2 = Arrays.asList(arr);           // 数组 → 可改 List
+    List<String> l3 = List.of("x", "y");            // 不可变 List
+    ```
+  - **查找依赖 `equals()`（重要）**：在 `List` 中**查找元素**（如 `contains()`、`indexOf()`、`remove(Object)`）时，实现类通过元素的 **`equals()`** 方法判断两个元素是否相等。因此**放入的元素必须正确覆写 `equals()`**（Java 标准库的 `String`、`Integer` 等已覆写，可直接用）。
+    - 编写 `equals()` 可借助 **`Objects.equals(a, b)`** 安全判等（自动处理 `null`，避免 NPE）：
+      ```java
+      @Override
+      public boolean equals(Object o) {
+          if (this == o) return true;                       // 同引用
+          if (o == null || getClass() != o.getClass()) return false;
+          Person p = (Person) o;
+          return Objects.equals(name, p.name);              // 借助 Objects.equals 处理 null
+      }
+      ```
+    - **不必覆写的情况**：**如果不在 `List` 中查找元素**（只按索引访问、遍历），就**不必覆写 `equals()`**——只有需要"按内容比较/查找/去重"时才必须覆写。
+  - 面试点：`ArrayList` vs `LinkedList` 的底层与适用场景；`List` 查找靠 `equals` 而非 `==`；自定义对象进 `List` 若要做 `contains/indexOf` 必须覆写 `equals`（通常也要覆写 `hashCode`）；`Arrays.asList`/`List.of` 返回的列表可变性差异。
+- **`equals()` 方法的正确编写方法（总结）**
+  1. **先确定"相等"逻辑**：明确哪些字段相等就认为两个实例相等（只比关键业务字段，不必比所有字段）。
+  2. **用 `instanceof` 判断类型**：先判断传入的 `Object` 是不是当前类型，是才继续比较字段，否则直接返回 `false`（注意：`instanceof` 对 `null` 返回 `false`，天然处理了 null 入参）。
+  3. **分类比较字段**：**引用类型用 `Objects.equals(a, b)` 比较，基本类型直接用 `==` 比较**（浮点可用 `Float.compare`/`Double.compare` 规避 NaN/精度问题）。
+  4. **`Objects.equals()` 的目的**：省去自己判 `null` 的麻烦——**两个引用都是 `null` 时也认为相等**（返回 `true`），避免手动判空导致的 `NullPointerException`。
+  5. **何时不必实现**：**如果没有调用 `List.contains()`、`indexOf()` 这类方法（也含 `Set`/`Map` 的查找/去重），放入的元素就不需要实现 `equals()`**。
+  ```java
+  @Override
+  public boolean equals(Object o) {
+      if (this == o) return true;                              // 同引用，必相等
+      if (!(o instanceof Person p)) return false;              // instanceof 判断类型（null 直接 false）
+      return Objects.equals(name, p.name)                       // 引用类型：Objects.equals（自动处理 null）
+             && age == p.age;                                  // 基本类型：直接用 ==
+  }
+  ```
+  - 补充：覆写 `equals()` 时**通常必须同时覆写 `hashCode()`**（相等对象必须有相等哈希码，否则放进 `HashSet`/`HashMap` 会出 bug）；用 IDE（IDEA：`Alt+Insert` → `equals() and hashCode()`）可一键生成规范实现。
+- **（待续）** 按「`List` → `Set` → `Queue` → `Map` → `Collections` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合」顺序学，边学边记。
 -
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）

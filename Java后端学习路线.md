@@ -36,16 +36,20 @@
 
 **目标**：能手写 Java 基础代码，应对笔试与面试八股。
 
-> 📌 **学习进度（截至 2026-10-29）**：✅ 廖雪峰「快速入门」已完成（变量/数据类型/运算/字符字符串/数组/流程控制/break·continue/输入输出）。✅ **面向对象编程已完成至 3.1.10 作用域 + 内部类**（类/对象/封装/构造器、继承、覆写、多态、final、抽象类、静态字段方法、访问权限与局部变量作用域、内部类 Inner/Anonymous/Static Nested，对应笔记 1.3 节）。⏳ 面向对象仅剩 **接口（interface）** 一小节待学。下一步：补接口 → 进入核心类库/集合。
+> 📌 **学习进度（截至 2026-10-29）**：✅ 廖雪峰「快速入门」已完成（变量/数据类型/运算/字符字符串/数组/流程控制/break·continue/输入输出）。✅ **面向对象编程已完成至 3.1.10 作用域 + 内部类**（类/对象/封装/构造器、继承、覆写、多态、final、抽象类、静态字段方法、访问权限与局部变量作用域、内部类 Inner/Anonymous/Static Nested，对应笔记 1.3 节）。⏳ 面向对象仅剩 **接口（interface）** 一小节待学。**学习顺序已定（用户 10/29 决策）**：接口收尾 → **集合（List/Set/Map）** → 异常 → 反射/注解 → 泛型 → IO/日期时间 → Lambda/Stream，即把集合提前、其余按廖雪峰主线顺序学。
 
 - [x] 语法基础：变量/流程控制/数组/字符串（快速入门已完成 10/28）
 - [x] 面向对象：类与对象、继承、多态、抽象类（已完成至 3.1.10 作用域 10/28；接口待学）
 - [x] 面向对象：内部类（Inner / Anonymous / Static Nested，笔记 1.3 已记录 10/29）
 - [x] Java 程序基础：classpath（JVM 如何搜索 .class，笔记 1.4 已记录 10/29）
 - [x] 字符串 String：不可变/常用操作/Unicode/UTF-8 编码（笔记 1.2 已记录 10/29）
-- [ ] 面向对象：类与对象、继承、多态、抽象类、接口
-- [ ] 核心类库：集合（List/Set/Map 源码与区别）、泛型、异常、常用 API
-- [ ] 进阶：反射、注解、Lambda、Stream API
+- [ ] 面向对象：接口（interface）（OOP 最后一小节，收尾）
+- [ ] 核心类库 · 集合（List/Set/Map：ArrayList/LinkedList/HashSet/TreeSet/HashMap/TreeMap 原理与区别）← 当前
+- [ ] 核心类库 · 异常（Exception 体系 / try-catch-finally / 自定义异常）
+- [ ] 核心类库 · 反射 + 注解
+- [ ] 核心类库 · 泛型（编译期类型安全 / 通配符 / 边界）
+- [ ] 核心类库 · IO / 日期时间
+- [ ] 进阶：Lambda、Stream API（函数式编程）
 - [ ] 并发基础：线程创建、锁（synchronized / Lock）、线程池、volatile
 - [ ] JVM 基础（八股重点）：内存模型、GC 垃圾回收、类加载
 - [ ] **算法：LeetCode Hot 100（强制 Java 写）**，每日 1 题、周末加 1 题（分类计划见第十三节）
@@ -295,9 +299,9 @@
 
 > 进度自查：完成一天就回头看路线图对应阶段的「里程碑」，能讲清楚再打勾进下一天。日期从 2026-10-28 起，遇放假/加班可顺延，但阶段里程碑不过关不进下一阶段。
 
-### 每日打卡上传 GitHub（已连好，私有仓 `java_learning`）
+### 每日打卡上传 GitHub（已连好，public 仓 `java_learning`）
 
-仓库：https://github.com/xiaolixaioyu/java_learning （私有，已推送首个版本）
+仓库：https://github.com/xiaolixaioyu/java_learning （**public**，已推送）
 
 每天在 IDEA 里勾完当天的 `[ ]` → 用 **Git Bash** 跑到 `F:/实习` 目录下执行一次即可：
 
