@@ -342,7 +342,30 @@
   }
   ```
   - 补充：覆写 `equals()` 时**通常必须同时覆写 `hashCode()`**（相等对象必须有相等哈希码，否则放进 `HashSet`/`HashMap` 会出 bug）；用 IDE（IDEA：`Alt+Insert` → `equals() and hashCode()`）可一键生成规范实现。
-- **（待续）** 按「`List` → `Set` → `Queue` → `Map` → `Collections` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合」顺序学，边学边记。
+- **`Map` 接口（键值对映射表）**
+  - **定义**：`Map` 是一种**映射表**，可以通过 **key 快速查找 value**（按键定位值，不是按索引也不是按元素）。
+    ```java
+    Map<String, Integer> map = new HashMap<>();
+    map.put("apple", 10);          // 存入 key-value
+    Integer v = map.get("apple");   // 通过 key 快速取 value → 10
+    ```
+  - **遍历方式**：
+    - 遍历 **`keySet()`**：拿到所有 key，再 `get(key)` 取 value（多一次查找，效率略低）：
+      ```java
+      for (String key : map.keySet()) {        // 遍历 key
+          Integer value = map.get(key);
+          System.out.println(key + " = " + value);
+      }
+      ```
+    - 遍历 **`entrySet()`**：直接拿到 `key-value` 键值对（`Map.Entry`），**推荐**（一次遍历即得 key 和 value，更高效）：
+      ```java
+      for (Map.Entry<String, Integer> e : map.entrySet()) {   // 直接取 key-value
+          System.out.println(e.getKey() + " = " + e.getValue());
+      }
+      ```
+  - **最常用实现**：**`HashMap`** 是日常最常用的 `Map` 实现（基于哈希表，增删改查近似 O(1)）；其他实现还有 `TreeMap`（按 key 排序，红黑树）、`LinkedHashMap`（保持插入顺序）。
+  - 面试点：`Map` **不继承 `Collection`**（独立家族）；遍历优先用 `entrySet()` 而非 `keySet()+get()`；自定义对象作 **key 必须同时正确覆写 `equals()` 和 `hashCode()`**（否则作为查找 key 会失效）；`HashMap` key 允许一个 `null`、value 允许多个 `null`。
+- **（待续）** 顺序已更新——`List`、`Map` 已学；剩余「`Set` → `Queue`/`Deque` → `Collections`/`Arrays` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
 -
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）
