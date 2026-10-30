@@ -441,7 +441,62 @@
     sorted.addAll(List.of("banana", "apple", "cherry"));   // 遍历 → cherry, banana, apple
     ```
   - 面试点：`HashSet` 无序、`TreeSet` 有序（实现 `SortedSet`）；`Set` 去重靠 `equals`+`hashCode`；`HashSet`/`TreeSet` 的元素约束分别等同于 `HashMap`/`TreeMap` 的 key；`LinkedHashSet` 保插入序。
-- **（待续）** 顺序已更新——`List`、`Map`、`Set` 已学；剩余「`Queue`/`Deque` → `Collections`/`Arrays` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
+- **`Queue` / `Deque` 接口（队列，FIFO）**
+  - **`Queue` 实现先进先出（FIFO）**：队尾进、队首出。
+    - **入队**：`add()` / `offer()` —— 把元素加到**队尾**（`add` 满时抛异常，`offer` 满时返回 `false`，容量队列推荐用 `offer`）。
+    - **出队并删除**：`remove()` / `poll()` —— 从**队首**取元素并删除（`remove` 空时抛异常，`poll` 空时返回 `null`，推荐用 `poll` 安全取值）。
+    - **只看队首不删除**：`element()` / `peek()` —— 取队首元素（`element` 空时抛异常，`peek` 空时返回 `null`）。
+    ```java
+    Queue<String> q = new LinkedList<>();   // LinkedList 实现了 Queue
+    q.offer("A"); q.offer("B");              // 入队尾：A, B
+    q.peek();                                // "A"（队首，不删除）
+    q.poll();                                // "A"（取出并删除，剩 B）
+    ```
+  - **⚠️ 不要把 `null` 添加到队列**：`poll()`/`peek()` 空队列时返回 `null` 来表示"无元素"，若队列本身允许 `null` 元素，就无法区分"取到 null 元素"还是"队列空"，易出 bug——所以**队列元素应避免 `null`**。
+  - **`PriorityQueue`：优先队列（按优先级出队）**：
+    - 从队首获取元素时，**总是获取优先级最高的元素**（不是先入先出）。
+    - **默认按元素比较顺序排序**：元素**必须实现 `Comparable` 接口**（`Integer`、`String` 等都已实现，自然序）。
+    - 也可以**通过 `Comparator` 自定义排序算法**，此时元素**就不必实现 `Comparable`**（`new PriorityQueue<>(comparator)`）。
+    ```java
+    PriorityQueue<Integer> pq = new PriorityQueue<>();   // 自然序（小顶堆）
+    pq.offer(3); pq.offer(1); pq.offer(2);
+    pq.poll();                                           // 1（总是最小/优先级最高）
+    ```
+  - 面试点：`Queue` 的 `offer`/`poll`/`peek` 与 `add`/`remove`/`element` 的区别（前者满/空时返回 `null`/`false` 不抛异常，更安全）；`PriorityQueue` 是优先队列非 FIFO、默认小顶堆、元素需 `Comparable` 或传 `Comparator`；`Deque`（双端队列，`ArrayDeque`）既可当栈也可当队列。
+- **`Deque` 接口（双端队列 Double Ended Queue）**
+  - 双端队列：两端（队首 / 队尾）都能进能出，于是方法成对出现，统一以 `First` / `Last` 区分：
+    - **添加**：`addFirst()`/`offerFirst()`（队首）、`addLast()`/`offerLast()`（队尾）。
+    - **获取并删除**：`removeFirst()`/`pollFirst()`（队首）、`removeLast()`/`pollLast()`（队尾）。
+    - **获取但不删除**：`getFirst()`/`peekFirst()`（队首）、`getLast()`/`peekLast()`（队尾）。
+    ```java
+    Deque<String> dq = new ArrayDeque<>();
+    dq.offerLast("A"); dq.offerLast("B");     // 队尾进：A, B
+    dq.offerFirst("X");                       // 队首进：X, A, B
+    dq.peekFirst();                           // "X"（队首）
+    dq.pollLast();                            // "B"（队尾出）
+    ```
+  - **方法命名习惯**：**总是调用 `xxxFirst()` / `xxxLast()`** 这组方法，以便与 `Queue` 的 `add/offer/remove/poll/element/peek`（只有"一端"语义）清晰区分开，避免混淆。
+  - **⚠️ 同样避免把 `null` 添加到队列**：`pollFirst/pollLast/peekFirst/peekLast` 在空队列时返回 `null` 表示"无元素"，队列含 `null` 就无法区分"取到 null"还是"队列空"。
+  - 补充：`Deque` 既能当**队列（FIFO）**又能当**栈（LIFO）**——当栈时用 `push()`（= `addFirst`）/`pop()`（= `removeFirst`），推荐用 `ArrayDeque` 而非遗留的 `Stack` 类。
+
+- **`Stack` 栈（后进先出 LIFO）**
+  - **定义**：栈是一种 **LIFO（Last-In-First-Out，后进先出）** 的数据结构。
+  - **三个核心操作**（返回类型都带 `E`，即栈中元素类型）：
+    - 压栈：`push(E)` —— 把元素压入栈顶
+    - 弹出：`pop(E)` —— 把**栈顶元素弹出**（取走并删除）
+    - 取栈顶但不弹出：`peek(E)` —— 只看栈顶，不删除
+  - **在 Java 中用 `Deque` 实现栈的功能**：用 `ArrayDeque` 当栈，且**只调用 `push()` / `pop()` / `peek()`** 这三个方法，避免调用 `Deque` 的其他方法（如 `offerLast`/`pollFirst` 等），否则会破坏"只能栈顶进出"的语义。
+    ```java
+    Deque<String> stack = new ArrayDeque<>();
+    stack.push("A");        // 压栈：栈顶 A
+    stack.push("B");        // 压栈：栈顶 B（A 在下面）
+    stack.peek();           // "B"（看栈顶，不弹出）
+    stack.pop();            // "B"（弹出栈顶，剩 A）
+    ```
+  - **⚠️ 不要使用遗留类 `Stack`**：`java.util.Stack` 是早期 JDK 的遗留类（继承自 `Vector`，线程安全但设计过时、性能差）；现代写法统一用 `ArrayDeque` 当栈。
+  - 面试点：栈是 LIFO（`Queue` 是 FIFO）；Java 里用 `Deque`+`push/pop/peek` 模拟栈、用 `ArrayDeque` 实现；**不要用遗留 `Stack` 类**；`pop()`/`peek()` 空栈会抛 `NoSuchElementException`（`Deque` 的 `poll`/`peek` 返回 `null`，注意区分）。
+
+- **（待续）** 顺序已更新——`List`、`Map`、`Set`、`Queue`/`Deque`、栈 已学；剩余「`Collections`/`Arrays` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
 -
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）
