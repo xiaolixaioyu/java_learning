@@ -10,6 +10,9 @@ class Student{
         this.name=name;
         this.score=score;
     }
+    String getName(){
+        return this.name;
+    }
 }
 class Students{
     //学生对象的集合采用map

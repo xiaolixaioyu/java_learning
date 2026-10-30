@@ -365,7 +365,83 @@
       ```
   - **最常用实现**：**`HashMap`** 是日常最常用的 `Map` 实现（基于哈希表，增删改查近似 O(1)）；其他实现还有 `TreeMap`（按 key 排序，红黑树）、`LinkedHashMap`（保持插入顺序）。
   - 面试点：`Map` **不继承 `Collection`**（独立家族）；遍历优先用 `entrySet()` 而非 `keySet()+get()`；自定义对象作 **key 必须同时正确覆写 `equals()` 和 `hashCode()`**（否则作为查找 key 会失效）；`HashMap` key 允许一个 `null`、value 允许多个 `null`。
-- **（待续）** 顺序已更新——`List`、`Map` 已学；剩余「`Set` → `Queue`/`Deque` → `Collections`/`Arrays` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
+- **`Map` 深入：key 的 `equals()`/`hashCode()` 规范 + `EnumMap` + `HashMap`/`SortedMap`**
+  - **key 是"内容相等"而非"同一对象"**：两个 key 的**内容应该一样**（不是同一个对象实例），所以要用 `equals()` 判等，并用 `hashCode()` 定位桶——**`equals()` 和 `hashCode()` 都必须正确覆写**。
+  - **正确使用 `Map` 的两条硬性保证**：
+    1. **key 必须正确覆写 `equals()`**：相等的两个 key 实例调用 `equals()` **必须返回 `true`**。
+    2. **key 必须正确覆写 `hashCode()`**，且**严格遵循规范**：
+       - 若两个对象**相等** → 两个对象的 `hashCode()` **必须相等**；
+       - 若两个对象**不相等** → 两个对象的 `hashCode()` **尽量不要相等**（哈希冲突越少，`HashMap` 越快）。
+  - **写成对实例 `a`、`b` 的等式**：
+    - `a.equals(b) == true` ⇒ `a.hashCode() == b.hashCode()`（**相等必同哈希码**）
+    - `a.equals(b) == false` ⇒ `a.hashCode()` 与 `b.hashCode()` **尽量不相等**（**不相等尽量不同哈希码**）
+    - 记忆口诀：**相等的对象哈希码必相等；不相等的对象哈希码尽量不相等**。
+  - **key 是 `enum` → 用 `EnumMap`**：若 key 是枚举类型，**推荐 `EnumMap`**——内部用数组实现，**既保证速度、也不浪费空间**（普通 `HashMap` 为哈希表预留空间，枚举场景没必要）。
+    - 面向抽象编程：声明时**持有 `Map` 接口**，实际 `new EnumMap<>(Xxx.class)`，便于以后替换实现：
+      ```java
+      Map<Day, String> map = new EnumMap<>(Day.class);   // 持有 Map 接口，实际用 EnumMap
+      ```
+  - **`HashMap`：以空间换时间，key 无序**：
+    - 基于哈希表，用"空间换时间"换取近似 O(1) 的增删改查；
+    - 实现原理决定**内部的 key 是无序的**——遍历 `HashMap` 的 key 时，**顺序不可预测**（但每个 key 都会遍历一次且**仅一次**）。
+  - **`SortedMap`：按 key 顺序遍历，最常用 `TreeMap`**：
+    - `SortedMap` 在遍历时**严格按照 key 的顺序**遍历，最常用的实现类是 **`TreeMap`**（红黑树）。
+    - 作为 `SortedMap` 的 key **必须实现 `Comparable` 接口**，或在构造时**传入 `Comparator`**。
+    - 必须**严格按 `compare()` 规范实现比较逻辑**（保持与 `equals` 一致：若 `compare==0` 则 `equals` 应为 true），否则 `TreeMap` 会**不能正常工作**（判重/查找出错）。
+  - 面试点：`HashMap` 无序、`TreeMap` 有序（且 key 需 `Comparable`/`Comparator`）；`equals` 与 `hashCode` 的契约（相等必同哈希码）；枚举 key 用 `EnumMap` 省空间又快；`LinkedHashMap` 保插入序、`TreeMap` 保 key 排序序。
+- **`Properties`：读写配置文件（`java.util`）**
+  - **用途**：写应用程序经常需要**读写配置文件**（如用户设置）。Java 默认配置文件以 **`.properties`** 为扩展名，格式是**每行 `key=value`**，**以 `#` 开头的是注释**。Java 集合库提供 **`Properties`** 类专门用于读写 `.properties`。
+    ```properties
+    # 这是注释
+    app.name=MyApp
+    app.version=1.0
+    ```
+  - **编码**：`.properties` 文件**可以使用 UTF-8 编码**（读取时指定 UTF-8，避免中文乱码）。
+  - **读取来源灵活**：可以从**文件系统**、**classpath**（打包进 jar 后更常用），或**任何其他地方**读取 `.properties`。
+    ```java
+    // 从 classpath 读取（推荐，jar 内可用）
+    try (var in = Main.class.getResourceAsStream("/config.properties")) {
+        var props = new Properties();
+        props.load(new InputStreamReader(in, StandardCharsets.UTF_8));  // 指定 UTF-8
+        String name = props.getProperty("app.name");                   // 读
+    }
+    // 从文件系统读取
+    try (var reader = new FileReader("config.properties", StandardCharsets.UTF_8)) {
+        var props = new Properties();
+        props.load(reader);
+    }
+    ```
+  - **写入**：
+    ```java
+    var props = new Properties();
+    props.setProperty("app.name", "MyApp");        // 写
+    try (var out = new FileWriter("config.properties", StandardCharsets.UTF_8)) {
+        props.store(out, "comments");              // 持久化（第二个参数是注释头）
+    }
+    ```
+  - **⚠️ 关键避坑**：读写 `Properties` 时，**只用 `getProperty()` / `setProperty()` 方法**，**不要调用它从 `Hashtable` 继承来的 `get()` / `put()` 等方法**——`get/put` 操作的是 `Object` 类型且绕过了 Properties 的字符串语义，类型不安全、易出错。
+  - 面试点：`Properties` 继承自 `Hashtable<Object,Object>`（是一个"老式 Map"），但**应使用 `getProperty/setProperty`**；`.properties` 默认 ISO-8859-1（旧规范），**显式用 UTF-8 读写**防乱码；配置放 classpath 便于随 jar 分发。
+- **`Set` 接口（存储不重复的元素集合）**
+  - **有序性区分**：`Set` 接口**不保证有序**；而 **`SortedSet`** 接口**保证元素有序**。
+    - **`HashSet` 无序**：因为它只实现了 `Set` 接口，**没实现 `SortedSet`** → 遍历顺序不可预测（同 `HashMap` 的 key 无序）。
+    - **`TreeSet` 有序**：因为它实现了 `SortedSet` 接口 → 遍历时按元素排序顺序。
+  - **用途**：`Set` 用来存储**不重复的元素集合**；可以**利用 `Set` 去除重复元素**（如把 `List` 丢进 `HashSet` 再取回，重复项自动消除）。
+    ```java
+    Set<String> set = new HashSet<>(List.of("a", "b", "a", "c"));   // 自动去重 → [a, b, c]
+    set.add("a");          // 重复 add 无效（Set 不允许重复）
+    set.size();            // 3
+    ```
+  - **元素要求（与 Map 的 key 完全一致）**：
+    - **放入 `HashSet` 的元素 = 作为 `HashMap` 的 key 的要求** → 必须正确覆写 `equals()` 和 `hashCode()`。
+    - **放入 `TreeSet` 的元素 = 作为 `TreeMap` 的 key 的要求** → 必须实现 `Comparable` 接口或传入 `Comparator`（即 `SortedSet` 的元素要可比较）。
+  - **遍历**：`SortedSet` 按元素的**排序顺序**遍历；也可以**自定义排序算法**（传入 `Comparator` 改变排序规则）。
+    ```java
+    // TreeSet 默认按元素自然序（String 按字典序）；可自定义 Comparator 倒序
+    Set<String> sorted = new TreeSet<>(Comparator.reverseOrder());
+    sorted.addAll(List.of("banana", "apple", "cherry"));   // 遍历 → cherry, banana, apple
+    ```
+  - 面试点：`HashSet` 无序、`TreeSet` 有序（实现 `SortedSet`）；`Set` 去重靠 `equals`+`hashCode`；`HashSet`/`TreeSet` 的元素约束分别等同于 `HashMap`/`TreeMap` 的 key；`LinkedHashSet` 保插入序。
+- **（待续）** 顺序已更新——`List`、`Map`、`Set` 已学；剩余「`Queue`/`Deque` → `Collections`/`Arrays` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
 -
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）
