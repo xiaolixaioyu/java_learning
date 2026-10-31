@@ -737,7 +737,41 @@
 
 -
 
+## 1.10 算法题解（LeetCode Hot 100 · Java 实现）
+
+> 刷题约定：**强制用 Java 写**；先自己写、再看题解对比；周末把同类题套路复盘到这里。题号按 LeetCode 中国「热题 100」顺序。
+
+### 1.10.1 ✅ 160. 相交链表（Intersection of Two Linked Lists）· 简单 · 2026-10-31（Hot100 第一题）
+- **题意**：给两个单链表 `headA`、`headB`，判断是否相交；**相交则返回第一个相交的节点**（不是只返回 true/false），不相交返回 `null`。要求不修改链表、尽量 O(n) 时间 + O(1) 空间。
+- **关键认知**：链表相交 ≠ 值相等，而是**两个指针指向同一个节点对象**（内存地址相同，用 `a == b` 判断，不是 `a.val == b.val`）。相交后两条链共用尾部。
+- **解法对比**
+  - **解法 1 · 双指针（最优，推荐记忆）**：`pA`、`pB` 分别从 `headA`、`headB` 出发，**走到末尾就跳到另一条链的头**继续走。无论两链是否等长，两指针最终走的总步数都是 `lenA+lenB`，会在**同一时刻到达同一节点**——相交则相遇于交点，不相交则同时变成 `null` 退出循环。时间 O(n)、空间 O(1)。
+  - **解法 2 · 哈希表**：先遍历 A 把所有节点塞进 `HashSet`，再遍历 B 逐个 `contains` 判断；时间 O(n)、空间 O(n)。
+  - **解法 3 · 算长度差**：各走一遍得 `lenA`、`lenB`，让长链先走 `|lenA-lenB|` 步再同步走，第一次相遇即交点；时间 O(n)、空间 O(1)，但代码比双指针啰嗦。
+- **参考实现（解法 1 双指针）**
+  ```java
+  public class Solution {
+      public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+          if (headA == null || headB == null) return null;
+          ListNode pA = headA, pB = headB;
+          // 任一为 null 就换到对方头；相等时退出（交点 或 双 null）
+          while (pA != pB) {
+              pA = (pA == null) ? headB : pA.next;
+              pB = (pB == null) ? headA : pB.next;
+          }
+          return pA;   // 相交返回交点节点；不相交返回 null
+      }
+  }
+  ```
+- **踩坑 / 面试点**
+  - 比较交点用 **`==`（节点引用相等）**，不是比 `val`（值可能巧合相等但节点不同）。
+  - 不能破坏原链表结构；不要 `new` 节点或改动 `next`。
+  - 边界：任一链表为空 → 直接 `null`；两链从头就相交（完全同源）→ 返回 `headA`。
+  - 双指针为何必相遇：两指针各走 `lenA+lenB` 步，必在同一时刻抵达同一节点（交点或终点 null）。
+
 ---
+
+
 
 ## 2. 阶段 2 · 数据库与工具
 
