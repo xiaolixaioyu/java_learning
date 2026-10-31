@@ -524,7 +524,24 @@
   - 进阶：`ReverseList<T>` 要实现 `Iterable<T>`，其 `iterator()` 就返回 `Iterator<T>`，`next()` 返回 `T`——把 `<T>` 沿"集合 → 迭代器 → 元素"一路传递，保证类型一致。
   - 关联：泛型完整内容见 `1.5 异常/泛型/IO/反射/注解`（通配符 `? extends`/`? super`、`PECS`、泛型擦除等），此处先建立"`<T>` 是占位类型、使用时确定"的直觉。
 
-- **（待续）** 顺序已更新——`List`、`Map`、`Set`、`Queue`/`Deque`、栈、遍历（`Iterator`/`Iterable`/`for-each`）已学；剩余「`Collections`/`Arrays` 工具类 → 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
+- **`Collections` 工具类（注意复数 `s`，别和 `Collection` 接口混淆）**
+  - **`Collection`（接口，单数）**：是**集合根接口**，`List`、`Set` 都继承它，代表"一类能装元素的集合"。
+  - **`Collections`（工具类，复数 `s`）**：是**集合的工具类**，提供一堆**静态方法**，用来操作 `Collection`/`List`/`Set`/`Map`。
+  - **把线程不安全的集合包成线程安全**（同步包装，synchronized 开头）：
+    - `List<T> synchronizedList(List<T> list)` —— 线程安全的 `List`
+    - `Set<T> synchronizedSet(Set<T> s)` —— 线程安全的 `Set`
+    - `Map<K,V> synchronizedMap(Map<K,V> m)` —— 线程安全的 `Map`
+    - ⚠️ 原理是给每个方法加 `synchronized`，**整块加锁、性能差**；且迭代时必须手动同步（否则仍有并发问题）。
+  - **`Collections` 常用工具方法（小结）**：
+    - 创建**空集合**：`emptyList()` / `emptySet()` / `emptyMap()`
+    - 创建**单元素集合**：`singletonList(e)` / `singleton(e)` / `singletonMap(k,v)`
+    - 创建**不可变集合**：`unmodifiableList/Set/Map(...)`（包一层，改就抛 `UnsupportedOperationException`）
+    - **排序 / 洗牌**：`sort(list)` / `shuffle(list)` / `reverse(list)` / `binarySearch(...)`
+    - 其他：`max/min`、`fill`、`copy`、`rotate` 等
+  - **⚠️ 同步包装已基本没用**：Java 5 起引入了更高效的**并发集合类**（如 `ConcurrentHashMap`、`CopyOnWriteArrayList`），这些 `synchronizedXxx` 方法已不推荐；**多线程完整概念留到后面（并发章节）讲**。
+  - 面试点：**`Collection` vs `Collections` 区别**（接口 vs 工具类，最常考命名混淆题）；`synchronizedXxx` 是整锁、性能差且迭代需手动同步；现代用并发集合替代；`unmodifiableXxx` 是不可变视图（非深拷贝）。
+
+- **（待续）** 顺序已更新——`List`、`Map`、`Set`、`Queue`/`Deque`、栈、遍历、`Collections` 工具类 已学；剩余「`Arrays` 工具类 → 线程安全集合（`ConcurrentHashMap` 等，并发章节展开）」继续按序学，边学边记。
 -
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）
