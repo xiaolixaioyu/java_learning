@@ -36,16 +36,16 @@
 
 **目标**：能手写 Java 基础代码，应对笔试与面试八股。
 
-> 📌 **学习进度（截至 2026-10-30）**：✅ 廖雪峰「快速入门」已完成。✅ **面向对象编程已完成至 3.1.10 作用域 + 内部类**（类/对象/封装/构造器、继承、覆写、多态、final、抽象类、静态字段方法、访问权限与局部变量作用域、内部类 Inner/Anonymous/Static Nested，对应笔记 1.3 节）。⏳ 面向对象仅剩 **接口（interface）** 一小节待学。🔵 **集合进行中**：`List`（已学 10/29）+ `Map`（已学 10/30）；`Set`/`Queue`/工具类/线程安全集合待学。**学习顺序已定（用户 10/29 决策）**：接口收尾 → **集合（List/Set/Map）** → 异常 → 反射/注解 → 泛型 → IO/日期时间 → Lambda/Stream，即把集合提前、其余按廖雪峰主线顺序学。
+> 📌 **学习进度（截至 2026-10-31）**：✅ 廖雪峰「快速入门」已完成。✅ **面向对象编程已完成至 3.1.10 作用域 + 内部类 + enum/record/JavaBean/BigInteger/BigDecimal/工具类**（笔记 1.3 及 1.1）。⏳ 面向对象仅剩 **接口（interface）** 一小节待学（OOP 收尾，建议优先干掉）。✅ **集合（1.2.3 节）已全部学完**：`List`/`Map`/`Set`/`Queue`/`Deque`/栈/遍历（`Iterable`+`Iterator`）/`Collections` 工具类（含同步包装、`empty`/`singleton`/`unmodifiable`/`sort`/`shuffle`）；`Arrays` 工具类与线程安全集合（`ConcurrentHashMap`，留并发章节）待补。**下一步（用户 10/31 决策）**：先收尾 接口 → 启动 **LeetCode Hot 100 第一阶段**（数组/字符串/哈希/双指针/链表/二叉树，已有集合+字符串基础）+ 按序学 **异常 → 反射/注解 → 泛型 → IO → Lambda/Stream**。
 
 - [x] 语法基础：变量/流程控制/数组/字符串（快速入门已完成 10/28）
 - [x] 面向对象：类与对象、继承、多态、抽象类（已完成至 3.1.10 作用域 10/28；接口待学）
 - [x] 面向对象：内部类（Inner / Anonymous / Static Nested，笔记 1.3 已记录 10/29）
 - [x] Java 程序基础：classpath（JVM 如何搜索 .class，笔记 1.4 已记录 10/29）
 - [x] 字符串 String：不可变/常用操作/Unicode/UTF-8 编码（笔记 1.2 已记录 10/29）
-- [ ] 面向对象：接口（interface）（OOP 最后一小节，收尾）
-- [ ] 核心类库 · 集合（List✅/Map✅，Set/Queue/工具类/线程安全集合待学）← 当前
-- [ ] 核心类库 · 异常（Exception 体系 / try-catch-finally / 自定义异常）
+- [ ] 面向对象：接口（interface）（OOP 最后一小节，收尾，建议优先）
+- [x] 核心类库 · 集合（List✅/Map✅/Set✅/Queue✅/Deque✅/栈✅/遍历✅/Collections✅ 已完成 10/31；Arrays 工具类 + 线程安全集合留并发章节）
+- [ ] 核心类库 · 异常（Exception 体系 / try-catch-finally / 自定义异常）← 集合后第一个
 - [ ] 核心类库 · 反射 + 注解
 - [ ] 核心类库 · 泛型（编译期类型安全 / 通配符 / 边界）
 - [ ] 核心类库 · IO / 日期时间
