@@ -496,7 +496,35 @@
   - **⚠️ 不要使用遗留类 `Stack`**：`java.util.Stack` 是早期 JDK 的遗留类（继承自 `Vector`，线程安全但设计过时、性能差）；现代写法统一用 `ArrayDeque` 当栈。
   - 面试点：栈是 LIFO（`Queue` 是 FIFO）；Java 里用 `Deque`+`push/pop/peek` 模拟栈、用 `ArrayDeque` 实现；**不要用遗留 `Stack` 类**；`pop()`/`peek()` 空栈会抛 `NoSuchElementException`（`Deque` 的 `poll`/`peek` 返回 `null`，注意区分）。
 
-- **（待续）** 顺序已更新——`List`、`Map`、`Set`、`Queue`/`Deque`、栈 已学；剩余「`Collections`/`Arrays` 工具类 → 遍历（`Iterator` / for-each）→ 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
+- **遍历集合：`Iterator` / `for-each` / `Iterable`**
+  - **自定义集合类想支持 `for-each` 循环，只需满足两个条件**：
+    1. 集合类**实现 `Iterable<T>` 接口**（该接口要求实现 `iterator()` 方法）；
+    2. `iterator()` **返回一个 `Iterator` 对象**，由这个 `Iterator` 去迭代集合内部数据。
+    ```java
+    // 典型骨架：自己写的集合实现 Iterable 就能被 for-each 遍历
+    public class MyList<T> implements Iterable<T> {
+        public Iterator<T> iterator() {
+            return new MyIterator();   // 返回知道如何迭代的内部类
+        }
+    }
+    // 之后就能：for (T x : myList) { ... }
+    ```
+  - **`Iterator` 是一种抽象的数据访问模型**（与具体集合实现解耦）。
+  - **使用 `Iterator` 模式迭代的好处**：
+    - 对**任何集合都采用同一种访问模型**（统一写法，不关心底层是数组还是链表还是树）；
+    - 调用者对集合**内部结构一无所知**（封装得好，黑盒访问）；
+    - 集合类返回的 **`Iterator` 对象自己知道如何迭代**（"怎么走"的逻辑封在迭代器里）。
+  - **Java 提供的标准迭代器模型**：集合类实现 `java.util.Iterable` 接口、返回 `java.util.Iterator` 实例；`for-each` 语法糖底层就是调用这套标准接口（`Collection` 已实现，`List`/`Set` 天然可用）。
+  - **迭代器核心方法**：`boolean hasNext()`（是否还有下一个）、`E next()`（取下一个）、`void remove()`（删除刚返回的，可选）。
+  - 面试点：`for-each` 的本质是 `Iterable`+`Iterator`；遍历时**不要用集合自身的 `remove()` 改结构**（会 `ConcurrentModificationException`），要用 `Iterator.remove()`；`Iterator` 把"怎么遍历"封进迭代器，实现"统一访问 + 隐藏内部结构"。
+
+- **泛型参数 `<T>`（占位类型）**
+  - 以 **`ReverseList<T>`** 为例：其中的 **`<T>` 是泛型参数**，代表一个**占位类型**——意思是"这个容器可以存放**某一种类型**的对象，**在使用时才确定 T 到底是什么类型**"（如 `ReverseList<String>` 表示只能放 `String`，`ReverseList<Integer>` 表示只能放 `Integer`）。
+  - 好处：编译期类型安全（放错类型直接报错）、免去手动 cast。
+  - 进阶：`ReverseList<T>` 要实现 `Iterable<T>`，其 `iterator()` 就返回 `Iterator<T>`，`next()` 返回 `T`——把 `<T>` 沿"集合 → 迭代器 → 元素"一路传递，保证类型一致。
+  - 关联：泛型完整内容见 `1.5 异常/泛型/IO/反射/注解`（通配符 `? extends`/`? super`、`PECS`、泛型擦除等），此处先建立"`<T>` 是占位类型、使用时确定"的直觉。
+
+- **（待续）** 顺序已更新——`List`、`Map`、`Set`、`Queue`/`Deque`、栈、遍历（`Iterator`/`Iterable`/`for-each`）已学；剩余「`Collections`/`Arrays` 工具类 → 线程安全集合（`ConcurrentHashMap` 等）」继续按序学，边学边记。
 -
 
 ### 1.3 面向对象（类/继承/多态/接口/抽象类）
